@@ -1,11 +1,9 @@
 import os
 import shutil
-from glob import glob
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-INPUT_PREFIX = "site"
-OUTPUT_PREFIX = "_build"
+from utils import get_template_paths, INPUT_PREFIX, OUTPUT_PREFIX
 
 def build():
 
@@ -22,7 +20,7 @@ def build():
 
     print(f"building site from {os.sep}{INPUT_PREFIX}{os.sep} to {os.sep}{OUTPUT_PREFIX}{os.sep}")
 
-    for path in glob(f"{INPUT_PREFIX}/**/*.html", recursive=True):
+    for path in get_template_paths():
         path = os.path.normpath(path)
 
         f = path.split(f"{INPUT_PREFIX}{os.sep}")[1]
