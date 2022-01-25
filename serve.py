@@ -19,7 +19,7 @@ def start_server():
 def serve():
 
     # start server in the background so we can watch files for changes
-    server_thread = threading.Thread(target=start_server, name="local_server")
+    server_thread = threading.Thread(target=start_server, name="local_server", daemon=True)
     server_thread.start()
 
     build()  # initial build
