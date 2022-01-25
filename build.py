@@ -42,6 +42,8 @@ def generate_render_output_path(f):
     pieces[-1] = pieces[-1].replace(".html", "")  # strip file extension
     if pieces[-1].startswith("base"):
         return False
+    if pieces[-1].startswith("index"):
+        pieces.pop()
     return os.path.join(os.getcwd(), OUTPUT_PREFIX, *pieces, "index.html")
 
 
