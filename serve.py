@@ -4,13 +4,13 @@ import threading
 import http.server
 
 from build import build
-from utils import get_template_paths, OUTPUT_PREFIX
+from utils import get_template_paths, config
 
-# override SimpleHTTPRequestHandler to serve files from OUTPUT_PREFIX
+# override SimpleHTTPRequestHandler to serve files from config.OUTPUT_DIR
 # via https://stackoverflow.com/a/52531444/625840
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=OUTPUT_PREFIX, **kwargs)
+        super().__init__(*args, directory=config.OUTPUT_DIR, **kwargs)
 
 def start_server():
     httpd = http.server.HTTPServer(('', 8383), Handler)

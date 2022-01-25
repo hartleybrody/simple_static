@@ -3,27 +3,27 @@ import shutil
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from utils import get_template_paths, INPUT_PREFIX, OUTPUT_PREFIX
+from utils import get_template_paths, config
 
 def build():
 
     env = Environment(
-        loader=FileSystemLoader(INPUT_PREFIX),
+        loader=FileSystemLoader(config.INPUT_DIR),
         autoescape=select_autoescape()
     )
 
     try:
-        shutil.rmtree(OUTPUT_PREFIX)  # nuke everything
+        shutil.rmtree(config.OUTPUT_DIR)  # nuke everything
     except FileNotFoundError:
         pass
-    os.makedirs(OUTPUT_PREFIX)
+    os.makedirs(config.OUTPUT_DIR)
 
-    print(f"building site from {os.sep}{INPUT_PREFIX}{os.sep} to {os.sep}{OUTPUT_PREFIX}{os.sep}")
+    print(f"building site from {os.sep}{config.INPUT_DIR}{os.sep} to {os.sep}{config.OUTPUT_DIR}{os.sep}")
 
     for path in get_template_paths():
         path = os.path.normpath(path)
 
-        f = path.split(f"{INPUT_PREFIX}{os.sep}")[1]
+        f = path.split(f"{config.INPUT_DIR}{os.sep}")[1]
         template = env.get_template(f)
 
         output_path = generate_render_output_path(f)
@@ -44,7 +44,7 @@ def generate_render_output_path(f):
         return False
     if pieces[-1].startswith("index"):
         pieces.pop()
-    return os.path.join(os.getcwd(), OUTPUT_PREFIX, *pieces, "index.html")
+    return os.path.join(os.getcwd(), config.OUTPUT_DIR, *pieces, "index.html")
 
 
 if __name__ == '__main__':
