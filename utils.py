@@ -28,7 +28,7 @@ for k, v in defaults.items():
         setattr(config, k, v)
 
 # print config to debug
-[print(f"{k}: {getattr(config, k)}") for k in dir(config) if not k.startswith("__")]
+[print(f"{k}: {getattr(config, k)}") for k in config.__dict__]
 
 def get_template_paths():
     return glob(f"{config.INPUT_DIR}/**/*.html", recursive=True)

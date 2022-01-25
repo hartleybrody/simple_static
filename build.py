@@ -34,7 +34,8 @@ def build():
 
         os.makedirs(os.path.dirname(output_path), exist_ok=True)  # https://stackoverflow.com/a/12517490/625840
         with open(output_path, "w+") as f:
-            html = template.render(the="variables", go="here")
+            config_ctx = {k.lower(): v for k, v in config.__dict__.items()}
+            html = template.render(**config_ctx)
             f.write(html)
 
 def generate_render_output_path(f):
