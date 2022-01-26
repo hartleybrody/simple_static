@@ -1,3 +1,5 @@
 __pycache__
 *.html
+*.css
+*.js
 *.yaml
