@@ -27,6 +27,8 @@ When setting up your static website:
 - Jinja templates should end in `.html`
 - All other files in your site will be copied to `OUTPUT_DIR` as-is
 
+You can use all of the jinja features you expect like [base templates and inheritance](https://jinja.palletsprojects.com/en/3.0.x/templates/#template-inheritance).
+
 Note: Jinja templates file names like `about.html` will be rendered to `about/index.html` so that your site can have "pretty URLs" (ie `/about/`).
 
 ## Config
