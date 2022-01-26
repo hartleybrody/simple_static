@@ -1,9 +1,10 @@
 import os
 import shutil
+from datetime import datetime
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from utils import get_template_paths, config
+from utils import get_template_paths, config, logging
 
 def build():
 
@@ -18,7 +19,7 @@ def build():
         pass
     os.makedirs(config.OUTPUT_DIR)
 
-    print(f"building site from {os.sep}{config.INPUT_DIR}{os.sep} to {os.sep}{config.OUTPUT_DIR}{os.sep}")
+    logging.info(f"building site from {os.sep}{config.INPUT_DIR}{os.sep} to {os.sep}{config.OUTPUT_DIR}{os.sep} at {datetime.now()}")
 
     for path in get_template_paths():
         path = os.path.normpath(path)
@@ -30,7 +31,7 @@ def build():
         if not output_path:
             continue
 
-        print(f" {f:<20}\t==> {output_path}")
+        logging.info(f" {f:<20}\t==> {output_path}")
 
         os.makedirs(os.path.dirname(output_path), exist_ok=True)  # https://stackoverflow.com/a/12517490/625840
         with open(output_path, "w+") as f:

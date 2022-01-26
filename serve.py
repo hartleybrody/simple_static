@@ -4,7 +4,7 @@ import threading
 import http.server
 
 from build import build
-from utils import get_template_paths, config
+from utils import get_template_paths, config, logging
 
 # override SimpleHTTPRequestHandler to serve files from config.OUTPUT_DIR
 # via https://stackoverflow.com/a/52531444/625840
@@ -34,7 +34,7 @@ def serve():
                 file_hashes[path] = file_hash
 
                 if prev_hash and prev_hash != file_hash:
-                    print(f"{path} changed...")
+                    logging.info(f"{path} changed...")
                     build()
                     break
 

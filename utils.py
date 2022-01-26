@@ -1,7 +1,12 @@
+import logging
 from glob import glob
 
 import yaml
 
+# setup logging
+logging.basicConfig(level=logging.INFO, format='%(message)s')
+
+# setup config
 with open("conf.yaml", "r") as f:
     user_config = yaml.safe_load(f)
 if not user_config:
@@ -27,8 +32,8 @@ for k, v in defaults.items():
     if k not in dir(config):
         setattr(config, k, v)
 
-# print config to debug
-[print(f"{k}: {getattr(config, k)}") for k in config.__dict__]
+# view config to debug
+[logging.info(f"{k}: {getattr(config, k)}") for k in config.__dict__]
 
 def get_template_paths():
     return glob(f"{config.INPUT_DIR}/**/*.html", recursive=True)
