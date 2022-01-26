@@ -8,9 +8,7 @@ logging.basicConfig(level=logging.INFO, format='%(message)s')
 
 # setup config
 with open("conf.yaml", "r") as f:
-    user_config = yaml.safe_load(f)
-if not user_config:
-    user_config = {}  # if file is blank, change from None to empty dict
+    user_config = yaml.safe_load(f) or {}  # if file is blank, change from None to empty dict
 
 defaults = {
     "INPUT_DIR": "site",
