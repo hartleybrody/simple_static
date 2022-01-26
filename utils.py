@@ -35,3 +35,6 @@ for k, v in defaults.items():
 
 def get_template_paths():
     return glob(f"{config.INPUT_DIR}/**/*.html", recursive=True)
+
+def get_non_template_paths():
+    return glob(f"{config.INPUT_DIR}/**/*[!.html]", recursive=True)

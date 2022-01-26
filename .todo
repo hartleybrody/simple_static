@@ -1,9 +1,1 @@
-add config file
- - override port, directories
- - add information to the context
-
-switch from print() to proper logging
-
-add yaml to top of pages to add that to context?
-
-verify that static files are copied to OUTPUT_PREFIX as-is, no jinja
+url_for() to link to static assets or other pages?

@@ -4,7 +4,7 @@ from datetime import datetime
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from utils import get_template_paths, config, logging
+from utils import get_template_paths, get_non_template_paths, config, logging
 
 def build():
 
@@ -21,6 +21,19 @@ def build():
 
     logging.info(f"building site from {os.sep}{config.INPUT_DIR}{os.sep} to {os.sep}{config.OUTPUT_DIR}{os.sep} at {datetime.now()}")
 
+    # copy non-template static files (css, js, imgs, etc) into OUTPUT_DIR
+    for path in get_non_template_paths():
+        path = os.path.normpath(path)
+        if not os.path.isfile(path):
+            continue  # skip directories
+
+        new_path = path.replace(config.INPUT_DIR, config.OUTPUT_DIR)
+        os.makedirs(os.path.dirname(new_path), exist_ok=True)
+
+        logging.info(f" copying {path} to {new_path}")
+        shutil.copy(path, new_path)
+
+    # render templates into OUTPUT_DIR
     for path in get_template_paths():
         path = os.path.normpath(path)
 
