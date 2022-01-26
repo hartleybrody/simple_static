@@ -7,8 +7,11 @@ import yaml
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 
 # setup config
-with open("conf.yaml", "r") as f:
-    user_config = yaml.safe_load(f) or {}  # if file is blank, change from None to empty dict
+try:
+    with open("config.yaml", "r") as f:
+        user_config = yaml.safe_load(f) or {}  # if file is blank, change from None to empty dict
+except FileNotFoundError:
+    user_config = {}
 
 defaults = {
     "INPUT_DIR": "site",
