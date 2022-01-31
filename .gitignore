@@ -4,3 +4,4 @@ __pycache__
 *.css
 *.js
 *.yaml
+*.egg-info
