@@ -1,5 +1,5 @@
+import os
 import time
-import hashlib
 import threading
 import http.server
 
@@ -23,20 +23,19 @@ def serve():
     server_thread.start()
 
     build()  # initial build
-    file_hashes = {}
+    file_mtimes = {}
 
     while True:
         for path in get_paths():
-            with open(path, "r") as f:
-                file_hash = hashlib.md5(f.read().encode()).digest()
 
-                prev_hash = file_hashes.get(path)
-                file_hashes[path] = file_hash
+            curr_mtime = os.path.getmtime(path)
+            prev_mtime = file_mtimes.get(path)
+            file_mtimes[path] = curr_mtime
 
-                if prev_hash and prev_hash != file_hash:
-                    logging.info(f"{path} changed...")
-                    build()
-                    break
+            if prev_mtime and prev_mtime != curr_mtime:
+                logging.info(f"{path} changed...")
+                build()
+                break
 
         time.sleep(1)
 
