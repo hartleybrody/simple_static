@@ -24,9 +24,23 @@ def serve():
 
     build()  # initial build
     file_mtimes = {}
+    prev_paths = get_paths()
 
     while True:
-        for path in get_paths():
+
+        # check if source files were added, removed or renamed
+        curr_paths = get_paths()
+        if prev_paths != curr_paths:
+            if len(prev_paths) < len(curr_paths):
+                logging.info("file added...")
+            elif len(prev_paths) > len(curr_paths):
+                logging.info("file removed...")
+            else:
+                logging.info("file renamed...")
+            build()
+
+        # check if files have been edited since we last checked
+        for path in curr_paths:
 
             curr_mtime = os.path.getmtime(path)
             prev_mtime = file_mtimes.get(path)
@@ -37,6 +51,7 @@ def serve():
                 build()
                 break
 
+        prev_paths = curr_paths
         time.sleep(1)
 
 if __name__ == '__main__':
