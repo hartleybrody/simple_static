@@ -4,7 +4,7 @@ import threading
 import http.server
 
 from .build import build
-from .utils import get_template_paths, config, logging
+from .utils import get_paths, config, logging
 
 # override SimpleHTTPRequestHandler to serve files from config.OUTPUT_DIR
 # via https://stackoverflow.com/a/52531444/625840
@@ -26,7 +26,7 @@ def serve():
     file_hashes = {}
 
     while True:
-        for path in get_template_paths():
+        for path in get_paths():
             with open(path, "r") as f:
                 file_hash = hashlib.md5(f.read().encode()).digest()
 
