@@ -4,7 +4,7 @@ from datetime import datetime
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from utils import get_template_paths, get_non_template_paths, config, logging
+from .utils import get_template_paths, get_non_template_paths, config, logging
 
 def build():
 

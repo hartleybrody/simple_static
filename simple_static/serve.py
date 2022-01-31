@@ -3,8 +3,8 @@ import hashlib
 import threading
 import http.server
 
-from build import build
-from utils import get_template_paths, config, logging
+from .build import build
+from .utils import get_template_paths, config, logging
 
 # override SimpleHTTPRequestHandler to serve files from config.OUTPUT_DIR
 # via https://stackoverflow.com/a/52531444/625840
