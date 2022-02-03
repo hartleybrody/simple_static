@@ -27,7 +27,7 @@ def build():
         if not os.path.isfile(path):
             continue  # skip directories
 
-        new_path = path.replace(config.INPUT_DIR, config.OUTPUT_DIR)
+        new_path = path.replace(config.INPUT_DIR, config.OUTPUT_DIR, 1)
         os.makedirs(os.path.dirname(new_path), exist_ok=True)
 
         logging.info(f" copying {path} to {new_path}")
