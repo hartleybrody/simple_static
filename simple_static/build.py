@@ -4,7 +4,7 @@ from datetime import datetime
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from .utils import get_template_paths, get_non_template_paths, get_posts_dir, config, logging, ctx
+from .utils import get_template_paths, get_non_template_paths, get_posts_dir, trim_input_dir, config, logging, ctx
 
 def build():
 
@@ -35,31 +35,27 @@ def build():
 
     # load .posts directory data into context
     for post_dir, posts in get_posts_dir().items():
-        logging.info(f"{post_dir} directory has {len(posts)} posts: {posts}")
-        key = post_dir.split(f"{config.INPUT_DIR}{os.sep}")[1].replace(os.sep, "")
+        logging.info(f"{post_dir} directory has {len(posts)} posts")
+        key = trim_input_dir(post_dir).replace(os.sep, "")
 
         if key.lower() in ctx:
             logging.warning(f"!! overwriting existing '{key}' in context with {post_dir} content")
-
         ctx[key] = []
 
         for path in posts:
-
+            logging.info(f"  {path} is a post")
             post = {}
-            f = path.split(f"{config.INPUT_DIR}{os.sep}")[1]
+            f = trim_input_dir(path)
             template = env.get_template(f)
             for block_title, block_content in template.blocks.items():
                 post[block_title] = "".join(block_content(template.new_context())).strip()
-
             ctx[key].append(post)
-
-        print(ctx[key])
 
     # render templates into OUTPUT_DIR
     for path in get_template_paths():
         path = os.path.normpath(path)
 
-        f = path.split(f"{config.INPUT_DIR}{os.sep}")[1]
+        f = trim_input_dir(path)
         template = env.get_template(f)
 
         output_path = generate_render_output_path(f)

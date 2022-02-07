@@ -1,3 +1,4 @@
+import os
 import logging
 from glob import glob
 
@@ -38,6 +39,9 @@ for k, v in defaults.items():
 
 # move config values to context
 ctx = {k.lower(): v for k, v in config.__dict__.items()}
+
+def trim_input_dir(path):
+    return path.split(f"{config.INPUT_DIR}{os.sep}")[1]
 
 def get_paths():
     return glob(f"{config.INPUT_DIR}/**/*.*", recursive=True)
