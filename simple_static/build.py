@@ -31,7 +31,7 @@ def build():
         new_path = path.replace(config.INPUT_DIR, config.OUTPUT_DIR, 1)
         os.makedirs(os.path.dirname(new_path), exist_ok=True)
 
-        logging.info(f" copying {path} to {new_path}")
+        logging.debug(f" copying {path} to {new_path}")
         shutil.copy(path, new_path)
 
     # load .posts directory data into context
@@ -44,7 +44,7 @@ def build():
         ctx[key] = []
 
         for path in posts:
-            logging.info(f"  {path} is a post")
+            logging.debug(f"  {path} is a post")
             f = trim_input_dir(path)
             template = env.get_template(f)
             post = dict(url=generate_output_url(f))
@@ -63,7 +63,7 @@ def build():
 
         output_path = generate_output_path(f)
 
-        logging.info(f" {f:<20}\t==> {output_path}")
+        logging.debug(f" {f:<20}\t==> {output_path}")
 
         os.makedirs(os.path.dirname(output_path), exist_ok=True)  # https://stackoverflow.com/a/12517490/625840
         with open(output_path, "w+") as f:

@@ -35,7 +35,7 @@ for k, v in defaults.items():
         setattr(config, k, v)
 
 # view config to debug
-[logging.info(f"{k}: {getattr(config, k)}") for k in config.__dict__]
+[logging.debug(f"{k}: {getattr(config, k)}") for k in config.__dict__]
 
 # move config values to context
 ctx = {k.lower(): v for k, v in config.__dict__.items()}
