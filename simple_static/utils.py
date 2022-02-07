@@ -47,3 +47,17 @@ def get_template_paths():
 
 def get_non_template_paths():
     return glob(f"{config.INPUT_DIR}/**/*[!.html]", recursive=True)
+
+def get_posts_dir():
+    dot_posts_files = glob(f"{config.INPUT_DIR}/**/.posts", recursive=True)
+
+    to_return = dict()
+    for dot_post_file in dot_posts_files:
+        key = dot_post_file.split(".posts")[0]
+        posts = glob(f"{key}/*.html")
+        for post in posts:
+            if post.endswith("index.html"):  # index isn't a post
+                posts.remove(post)
+        to_return[key] = posts
+
+    return to_return
