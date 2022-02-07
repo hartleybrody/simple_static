@@ -40,8 +40,38 @@ for k, v in defaults.items():
 # move config values to context
 ctx = {k.lower(): v for k, v in config.__dict__.items()}
 
+def is_template(path):
+    pieces = path.split(os.sep)
+    if pieces[-1].startswith("base"):
+        return False  # 'base-*' prefix isn't a page
+    if pieces[-1].startswith("_"):
+        return False  # '_*' are layouts and not their own pages
+    return True
+
 def trim_input_dir(path):
     return path.split(f"{config.INPUT_DIR}{os.sep}")[1]
+
+def trim_output_dir(path):
+    return path.split(f"{config.OUTPUT_DIR}{os.sep}")[1]
+
+def generate_output_path(path, full=True):
+    pieces = path.split(os.sep)
+    pieces[-1] = pieces[-1].replace(".html", "")  # strip file extension
+    if pieces[-1].startswith("index"):
+        pieces.pop()  # don't double nest index documents
+
+    final_pieces = [config.OUTPUT_DIR, *pieces, "index.html"]
+    if full:
+        final_pieces.insert(0, os.getcwd())
+
+    return os.path.join(*final_pieces)
+
+def generate_output_url(path):
+    path = generate_output_path(path, full=False)
+    trim = trim_output_dir(path).split("index.html")[0]
+    if not trim.startswith("/"):
+        trim = f"/{trim}"
+    return trim
 
 def get_paths():
     return glob(f"{config.INPUT_DIR}/**/*.*", recursive=True)

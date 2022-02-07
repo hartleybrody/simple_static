@@ -4,7 +4,8 @@ from datetime import datetime
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from .utils import get_template_paths, get_non_template_paths, get_posts_dir, trim_input_dir, config, logging, ctx
+from .utils import *
+from .utils import config, logging, ctx
 
 def build():
 
@@ -44,9 +45,9 @@ def build():
 
         for path in posts:
             logging.info(f"  {path} is a post")
-            post = {}
             f = trim_input_dir(path)
             template = env.get_template(f)
+            post = dict(url=generate_output_url(f))
             for block_title, block_content in template.blocks.items():
                 post[block_title] = "".join(block_content(template.new_context())).strip()
             ctx[key].append(post)
@@ -54,13 +55,13 @@ def build():
     # render templates into OUTPUT_DIR
     for path in get_template_paths():
         path = os.path.normpath(path)
+        if not is_template(path):
+            continue
 
         f = trim_input_dir(path)
         template = env.get_template(f)
 
-        output_path = generate_render_output_path(f)
-        if not output_path:
-            continue
+        output_path = generate_output_path(f)
 
         logging.info(f" {f:<20}\t==> {output_path}")
 
@@ -69,17 +70,6 @@ def build():
 
             html = template.render(**ctx)
             f.write(html)
-
-def generate_render_output_path(f):
-    pieces = f.split(os.sep)
-    pieces[-1] = pieces[-1].replace(".html", "")  # strip file extension
-    if pieces[-1].startswith("base"):
-        return False  # 'base-*' prefix isn't a page
-    if pieces[-1].startswith("_"):
-        return False  # '_*' are layouts and not their own pages
-    if pieces[-1].startswith("index"):
-        pieces.pop()
-    return os.path.join(os.getcwd(), config.OUTPUT_DIR, *pieces, "index.html")
 
 
 if __name__ == '__main__':
