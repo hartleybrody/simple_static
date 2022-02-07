@@ -36,6 +36,9 @@ for k, v in defaults.items():
 # view config to debug
 [logging.info(f"{k}: {getattr(config, k)}") for k in config.__dict__]
 
+# move config values to context
+ctx = {k.lower(): v for k, v in config.__dict__.items()}
+
 def get_paths():
     return glob(f"{config.INPUT_DIR}/**/*.*", recursive=True)
 
