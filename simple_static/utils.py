@@ -19,6 +19,7 @@ defaults = {
     "OUTPUT_DIR": "_build",
     "LOCAL_HOST": "localhost",
     "LOCAL_PORT": "8383",
+    "SORT_POSTS_BY": "created_at"
 }
 
 class Config(object):

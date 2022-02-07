@@ -52,6 +52,8 @@ def build():
                 post[block_title] = "".join(block_content(template.new_context())).strip()
             ctx[key].append(post)
 
+        ctx[key] = sorted(ctx[key], key=lambda x: x.get(config.SORT_POSTS_BY, ""), reverse=True)
+
     # render templates into OUTPUT_DIR
     for path in get_template_paths():
         path = os.path.normpath(path)
