@@ -18,6 +18,10 @@ Install via [pip](https://pypi.org/project/simple-static/)
 
     pip install simple_static
 
+The site has two simple commands you can run from inside the root of your website, which is the directory that contains the `site` and `_build` directories as well as the optional `config.yaml` file.
+
+Neither command takes parameters, everything is controlled via the config.yaml file, as described below.
+
 Run a one-time build of your website
 
     build
@@ -26,7 +30,7 @@ Run a local server that serves your site and also watches for changes to file to
 
     serve
 
-By default, your site will be served at http://localhost:8383
+By default, your site will be served at http://localhost:8383.
 
 ## The basics
 
