@@ -14,9 +14,19 @@ That's it.
 
 ## Getting Started
 
-Install
+Install via pip
 
-Usage
+    pip install simple_static
+
+Run a one-time build of your website
+
+    build
+
+Run a local server that serves your site and also watches for changes to file to trigger a rebuild
+
+    serve
+
+By default, your site will be served at http://localhost:8383
 
 ## The basics
 
