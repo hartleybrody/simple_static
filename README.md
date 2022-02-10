@@ -14,7 +14,7 @@ That's it.
 
 ## Getting Started
 
-Install via pip
+Install via [pip](https://pypi.org/project/simple-static/)
 
     pip install simple_static
 
