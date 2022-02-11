@@ -3,7 +3,7 @@ Create a simple static website using python and jinja templates.
 
 Simple Static has four pieces:
 
-1. A `build` command that renders jinja templates to an `OUTPUT_DIR`
+1. A `build` command that renders jinja templates to an output directory
 2. A `serve` command that runs a local server & watches for changes to rebuild the site
 3. A config parser that reads an optional `config.yaml` file to specify settings & add global context variables
 4. Support for collecting a series of templates as "posts" and gathering common information to render them in a list
@@ -18,7 +18,13 @@ Install via [pip](https://pypi.org/project/simple-static/)
 
     pip install simple_static
 
-The site has two simple commands you can run from inside the root of your website, which is the directory that contains the `site` and `_build` directories as well as the optional `config.yaml` file.
+A basic file structure for your project looks like this, pretty typical for static sites
+
+    site/           # directory with .html jinja templates and other static files
+    _build/         # directory where the site gets built to
+    config.yaml     # optional yaml file
+
+The package has two simple commands you can run from inside the root of your website, which is the directory that contains the `site` and `_build` directories as well as the optional `config.yaml` file.
 
 Neither command takes parameters, everything is controlled via the config.yaml file, as described below.
 
@@ -26,15 +32,15 @@ Run a one-time build of your website
 
     build
 
-Run a local server that serves your site and also watches for changes to file to trigger a rebuild
+Run a local server that serves your site and also watches for changes to files to trigger a rebuild
 
     serve
 
 By default, your site will be served at http://localhost:8383.
 
-## The basics
+## The Basics
 
-There's an `INPUT_DIR` (default `site`) which points to the folder that contains your jinja templates, as well as other static files (css, javascript, etc). There's also an `OUTPUT_DIR` (default `\_build`) that gets written to every time the site is rebuilt.
+There's an `INPUT_DIR` (defaults to `site`) which points to the folder that contains your jinja templates, as well as other static files (css, javascript, etc). There's also an `OUTPUT_DIR` (defaults to `_build`) that gets written to every time the site is rebuilt.
 
 🧹 Don't edit any of the files in the `OUTPUT_DIR` directly as these are overwritten every time the site is rebuilt.
 
@@ -47,9 +53,9 @@ When setting up your static website:
 
 You can use all of the jinja features you expect like [base templates and inheritance](https://jinja.palletsprojects.com/en/3.0.x/templates/#template-inheritance). If you've never worked with jinja before, check out their helpful [Template Designer Documentation](https://jinja.palletsprojects.com/en/3.0.x/templates/) to learn the basics.
 
-Jinja templates file names like `about.html` will be built to a file like `about/index.html` so that your site can have "pretty URLs" (ie `/about/`).
+Template file names like `about.html` will be built to a file like `about/index.html` so that your site can have "pretty URLs" (ie `/about/`).
 
-When jinja renders a template, we provide a "context" which is a set of variables that can be accessed in that page's template. The two ways to add things to the global site context are via [config](#config) and [posts](#posts).
+When jinja renders a template, we provide a "context" which is a set of variables that can be accessed in that  template file. The two ways to add things to the global site context are via [config](#config) and [posts](#posts).
 
 ## Config
 
@@ -85,7 +91,7 @@ The posts feature allows you to extract some common metadata from each of the po
 
 In order to treat a collection of templates as a "series of posts" you simply put them in a directory (for example, `projects`) and add an empty file called `.posts` to that directory. That's it!
 
-When the site is built, each of the templates inside that directory will get converted to a dict of `block_name`: `block_content`, and then added to a list. This list is sorted by the value at `SORT_POSTS_BY` for each post (which defaults to "created_at"), and the list gets added to the global site context, as the name of the directory (ie `projects`). Each post also automatically gets a `url` key that can be used for building links to it on your site.
+When the site is built, each of the templates inside that directory will get converted to a dict of `block_name`: `block_content`, and then added to a list. This list is sorted by the value inside the block named by `SORT_POSTS_BY` (which defaults to "created_at"), and the list gets added to the global site context, as the name of the directory (ie `projects`). Each post also automatically gets a `url` key that can be used for building links to that page on your site.
 
 Here's an example:
 
