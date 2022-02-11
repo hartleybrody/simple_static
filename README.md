@@ -134,3 +134,10 @@ Then, inside your `index.html` template file (or any other template file), you c
     {% endfor %}
 
 Here, you see that you have access to a context variable called "projects" since that's the name of the directory that contains the `.post` file. The name for each of the attributes of a post ("title", "desc", etc) is totally up to you, and is taken from the name of the jinja block in the template file for that post. Try to make sure that all of the posts in a collection have the same named blocks, so you can print things correctly when looping through them.
+
+## Contributing
+This is my first time publishing a python project to PyPi, and I'd love to hear from you if you use it.
+
+Feel free to [open an issue](https://github.com/hartleybrody/simple_static/issues/new) if you need any help or submit a PR if you want to fix anything or add features.
+
+You can also [tweet me a link](https://twitter.com/hartbro/) if you use this to build a website! I may even add a link to your site here as well 🔗
