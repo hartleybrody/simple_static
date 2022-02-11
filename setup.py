@@ -14,5 +14,9 @@ setuptools.setup(
             'build = simple_static.build:build',
             'serve = simple_static.serve:serve',
         ]
-    }
+    },
+    long_description="""
+        Check out the readme on github:
+        https://github.com/hartleybrody/simple_static
+    """
 )
