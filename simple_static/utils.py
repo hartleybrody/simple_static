@@ -18,7 +18,8 @@ defaults = {
     "LOCAL_PORT": "8383",
     "SORT_POSTS_BY": "created_at",
     "PRETTY_URL": True,
-    "LOG_LEVEL": "INFO"
+    "LOG_LEVEL": "INFO",
+    "BUILD_SCRIPTS": [],
 }
 
 class Config(object):
