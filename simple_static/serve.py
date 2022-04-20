@@ -13,7 +13,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         super().__init__(*args, directory=config.OUTPUT_DIR, **kwargs)
 
 def start_server():
-    httpd = http.server.HTTPServer(('', 8383), Handler)
+    logging.info(f"starting server at: http://{config.LOCAL_HOST}:{config.LOCAL_PORT}")
+    httpd = http.server.HTTPServer((config.LOCAL_HOST, int(config.LOCAL_PORT)), Handler)
     httpd.serve_forever()
 
 def serve():
