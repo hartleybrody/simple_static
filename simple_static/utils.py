@@ -19,7 +19,8 @@ defaults = {
     "OUTPUT_DIR": "_build",
     "LOCAL_HOST": "localhost",
     "LOCAL_PORT": "8383",
-    "SORT_POSTS_BY": "created_at"
+    "SORT_POSTS_BY": "created_at",
+    "PRETTY_URL": True,
 }
 
 class Config(object):
@@ -57,11 +58,14 @@ def trim_output_dir(path):
 
 def generate_output_path(path, full=True):
     pieces = path.split(os.sep)
-    pieces[-1] = pieces[-1].replace(".html", "")  # strip file extension
-    if pieces[-1].startswith("index"):
-        pieces.pop()  # don't double nest index documents
 
-    final_pieces = [config.OUTPUT_DIR, *pieces, "index.html"]
+    if config.PRETTY_URL:
+        pieces[-1] = pieces[-1].replace(".html", "")  # strip file extension
+        if pieces[-1].startswith("index"):
+            pieces.pop()  # don't double nest index documents
+        final_pieces = [config.OUTPUT_DIR, *pieces, "index.html"]
+    else:
+        final_pieces = [config.OUTPUT_DIR, *pieces]
     if full:
         final_pieces.insert(0, os.getcwd())
 
