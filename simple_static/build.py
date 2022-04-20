@@ -73,9 +73,9 @@ def build():
             html = template.render(**ctx)
             f.write(html)
 
-    for build_script in config.BUILD_SCRIPTS:
-        logging.info(f"running build script: {build_script}")
-        exec(open(build_script).read())
+    for plugin in config.PLUGINS:
+        logging.info(f"running plugin: {plugin}")
+        exec(open(plugin).read())
 
 
 if __name__ == '__main__':

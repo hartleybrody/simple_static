@@ -19,7 +19,7 @@ defaults = {
     "SORT_POSTS_BY": "created_at",
     "PRETTY_URL": True,
     "LOG_LEVEL": "INFO",
-    "BUILD_SCRIPTS": [],
+    "PLUGINS": [],
 }
 
 class Config(object):
