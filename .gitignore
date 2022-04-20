@@ -5,8 +5,9 @@ __pycache__
 *.js
 *.yaml
 *.egg-info
-dist/*
 
+dist
+build
 
 site
 _build
