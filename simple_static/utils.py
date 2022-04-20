@@ -4,9 +4,6 @@ from glob import glob
 
 import yaml
 
-# setup logging
-logging.basicConfig(level=logging.INFO, format='%(message)s')
-
 # setup config
 try:
     with open("config.yaml", "r") as f:
@@ -21,6 +18,7 @@ defaults = {
     "LOCAL_PORT": "8383",
     "SORT_POSTS_BY": "created_at",
     "PRETTY_URL": True,
+    "LOG_LEVEL": "INFO"
 }
 
 class Config(object):
@@ -35,6 +33,9 @@ for k, v in user_config.items():
 for k, v in defaults.items():
     if k not in dir(config):
         setattr(config, k, v)
+
+# setup logging
+logging.basicConfig(level=getattr(logging, config.LOG_LEVEL.upper()), format='%(message)s')
 
 # view config to debug
 [logging.debug(f"{k}: {getattr(config, k)}") for k in config.__dict__]
