@@ -9,5 +9,6 @@ __pycache__
 dist
 build
 
+.todo*
 site
 _build
