@@ -89,7 +89,7 @@ def get_template_paths():
     return glob(f"{config.INPUT_DIR}/**/*.html", recursive=True)
 
 def get_non_template_paths():
-    return glob(f"{config.INPUT_DIR}/**/*[!.html]", recursive=True)
+    return [p for p in glob(f"{config.INPUT_DIR}/**/*", recursive=True) if not p.endswith(".html")]
 
 def get_posts_dir():
     dot_posts_files = glob(f"{config.INPUT_DIR}/**/.posts", recursive=True)
