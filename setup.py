@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name='simple_static',
-    version='0.0.2',
+    version='0.0.3',
     packages=['simple_static'],
     install_requires=[
         "Jinja2",
