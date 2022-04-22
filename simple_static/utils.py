@@ -50,6 +50,8 @@ def is_template(path):
         return False  # 'base-*' prefix isn't a page
     if pieces[-1].startswith("_"):
         return False  # '_*' are layouts and not their own pages
+    if any([piece.startswith("_") for piece in pieces]):
+        return False
     return True
 
 def trim_input_dir(path):

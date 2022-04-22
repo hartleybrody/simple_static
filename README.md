@@ -1,12 +1,13 @@
 # Simple Static
 Create a simple static website using python and jinja templates.
 
-Simple Static has four pieces:
+Simple Static has a few pieces:
 
 1. A `build` command that renders jinja templates to an output directory
 2. A `serve` command that runs a local server & watches for changes to rebuild the site
 3. A config parser that reads an optional `config.yaml` file to specify settings & add global context variables
 4. Support for collecting a series of templates as "posts" and gathering common information to render them in a list
+5. A plugin system to run your python scripts after your site is built
 
 That's it.
 
@@ -135,6 +136,9 @@ Then, inside your `index.html` template file (or any other template file), you c
     {% endfor %}
 
 Here, you see that you have access to a context variable called "projects" since that's the name of the directory that contains the `.post` file. The name for each of the attributes of a post ("title", "desc", etc) is totally up to you, and is taken from the name of the jinja block in the template file for that post. Try to make sure that all of the posts in a collection have the same named blocks, so you can print things correctly when looping through them.
+
+## Plugins
+Plugins are a simple system where we ...
 
 ## Contributing
 This is my first time publishing a python project to PyPi, and I'd love to hear from you if you use it.
