@@ -20,7 +20,8 @@ def build():
         pass
     os.makedirs(config.OUTPUT_DIR)
 
-    logging.info(f"building site from {os.sep}{config.INPUT_DIR}{os.sep} to {os.sep}{config.OUTPUT_DIR}{os.sep} at {datetime.now()}")
+    t0 = datetime.now()
+    logging.info(f"building site from {os.sep}{config.INPUT_DIR}{os.sep} to {os.sep}{config.OUTPUT_DIR}{os.sep} at {t0}")
 
     # copy non-template static files (css, js, imgs, etc) into OUTPUT_DIR
     for path in get_non_template_paths():
@@ -76,6 +77,9 @@ def build():
     for plugin in config.PLUGINS:
         logging.info(f"running plugin: {plugin}")
         exec(open(plugin).read())
+
+    t1 = datetime.now()
+    logging.debug(f"finished building at {t1}, took {t1 - t0}")
 
 
 if __name__ == '__main__':
