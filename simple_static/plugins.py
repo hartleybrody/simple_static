@@ -1,8 +1,9 @@
 import os
+from glob import glob
 
 # import these so we can expose them to plugins
 from .utils import config, ctx, logging
-from .utils import generate_output_path
+from .utils import generate_output_path, trim_output_dir
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
@@ -31,3 +32,8 @@ def build_page(template_path, output_path, **user_context):
     with open(output_path, "w+") as f:
         html = template.render(**ctx)
         f.write(html)
+
+
+def get_pages():
+    rendered_pages = glob(f"{config.OUTPUT_DIR}/**/*.html", recursive=True)
+    return [{"file_path": page, "url_path": trim_output_dir(page)}  for page in sorted(rendered_pages)]
