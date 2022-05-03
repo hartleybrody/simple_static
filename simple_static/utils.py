@@ -44,6 +44,8 @@ logging.basicConfig(level=getattr(logging, config.LOG_LEVEL.upper()), format='%(
 # move config values to context
 ctx = {k.lower(): v for k, v in config.__dict__.items()}
 
+TEMPLATE_SUFFIXES = ["html", "htm"]
+
 def is_template(path):
     pieces = path.split(os.sep)
     if pieces[-1].startswith("base"):
@@ -51,7 +53,7 @@ def is_template(path):
     if pieces[-1].startswith("_"):
         return False  # '_*' are layouts and not their own pages
     if any([piece.startswith("_") for piece in pieces]):
-        return False
+        return False  # skip any directories with _* prefix
     return True
 
 def trim_input_dir(path):
@@ -64,7 +66,8 @@ def generate_output_path(path, full=True):
     pieces = path.split(os.sep)
 
     if config.PRETTY_URL:
-        pieces[-1] = pieces[-1].replace(".html", "")  # strip file extension
+        for suffix in TEMPLATE_SUFFIXES:
+            pieces[-1] = pieces[-1].replace(f".{suffix}", "")  # strip file extension
         if pieces[-1].startswith("index"):
             pieces.pop()  # don't double nest index documents
         final_pieces = [config.OUTPUT_DIR, *pieces, "index.html"]
@@ -76,6 +79,7 @@ def generate_output_path(path, full=True):
     return os.path.join(*final_pieces)
 
 def generate_output_url(path):
+    # generate the URL that someone would visit in their browser, used with posts
     path = generate_output_path(path, full=False)
     trim = trim_output_dir(path).split("index.html")[0]
     if not trim.startswith("/"):
@@ -86,10 +90,18 @@ def get_paths():
     return glob(f"{config.INPUT_DIR}/**/*.*", recursive=True)
 
 def get_template_paths():
-    return glob(f"{config.INPUT_DIR}/**/*.html", recursive=True)
+    paths = []
+    for suffix in TEMPLATE_SUFFIXES:
+        paths += glob(f"{config.INPUT_DIR}/**/*.{suffix}", recursive=True)
+    return paths
 
 def get_non_template_paths():
-    return [p for p in glob(f"{config.INPUT_DIR}/**/*", recursive=True) if not p.endswith(".html")]
+    to_return = []
+    for path in glob(f"{config.INPUT_DIR}/**/*", recursive=True):
+        if any([path.endswith(suffix) for suffix in TEMPLATE_SUFFIXES]):
+            continue
+        to_return.append(path)
+    return to_return
 
 def get_posts_dir():
     dot_posts_files = glob(f"{config.INPUT_DIR}/**/.posts", recursive=True)
