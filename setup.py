@@ -8,7 +8,6 @@ setuptools.setup(
         "Jinja2",
         "MarkupSafe",
         "PyYAML",
-        "markdown"
     ],
     entry_points={
         'console_scripts': [
