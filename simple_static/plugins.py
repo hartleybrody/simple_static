@@ -26,7 +26,7 @@ def build_page(template_path, output_path, **user_context):
 
     template = env.get_template(template_path)
 
-    output_path = generate_output_path(output_path)
+    output_path = generate_output_path(output_path, can_prettify=False)
     os.makedirs(os.path.dirname(output_path), exist_ok=True)  # https://stackoverflow.com/a/12517490/625840
 
     with open(output_path, "w+") as f:

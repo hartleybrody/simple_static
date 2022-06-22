@@ -62,10 +62,10 @@ def trim_input_dir(path):
 def trim_output_dir(path):
     return path.split(f"{config.OUTPUT_DIR}{os.sep}")[1]
 
-def generate_output_path(path, full=True):
+def generate_output_path(path, full=True, can_prettify=True):
     pieces = path.split(os.sep)
 
-    if config.PRETTY_URL:
+    if config.PRETTY_URL and can_prettify:
         for suffix in TEMPLATE_SUFFIXES:
             pieces[-1] = pieces[-1].replace(f".{suffix}", "")  # strip file extension
         if pieces[-1].startswith("index"):
