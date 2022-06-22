@@ -85,9 +85,13 @@ def generate_output_path(path, full=True, can_prettify=True):
 def generate_output_url(path):
     # generate the URL that someone would visit in their browser, used with posts
     path = generate_output_path(path, full=False)
-    trim = trim_output_dir(path).split("index.html")[0]
+    trim = trim_output_dir(path)
+    trim = trim_input_dir(trim)
+    trim = trim.split("index.html")[0]
     if not trim.startswith("/"):
         trim = f"/{trim}"
+    if not trim.endswith("/"):
+        trim = f"{trim}/"
     return trim
 
 def get_paths():
