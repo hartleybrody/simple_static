@@ -3,7 +3,7 @@ from glob import glob
 
 # import these so we can expose them to plugins
 from .utils import config, ctx, logging
-from .utils import generate_output_path, trim_output_dir
+from .utils import generate_output_path, trim_output_dir, generate_output_url
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
@@ -36,4 +36,8 @@ def build_page(template_path, output_path, **user_context):
 
 def get_pages():
     rendered_pages = glob(f"{config.OUTPUT_DIR}/**/*.html", recursive=True)
-    return [{"file_path": page, "url_path": trim_output_dir(page)}  for page in sorted(rendered_pages)]
+    return [{
+        "file_path": page,
+        "url_path": trim_output_dir(page),
+        "pretty_url": generate_output_url(page),
+    } for page in sorted(rendered_pages)]
