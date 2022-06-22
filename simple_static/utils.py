@@ -57,10 +57,14 @@ def is_template(path):
     return True
 
 def trim_input_dir(path):
-    return path.split(f"{config.INPUT_DIR}{os.sep}")[1]
+    pieces = path.split(os.sep)
+    pieces = [p for p in pieces if p != config.INPUT_DIR]
+    return os.path.join(*pieces)
 
 def trim_output_dir(path):
-    return path.split(f"{config.OUTPUT_DIR}{os.sep}")[1]
+    pieces = path.split(os.sep)
+    pieces = [p for p in pieces if p != config.OUTPUT_DIR]
+    return os.path.join(*pieces)
 
 def generate_output_path(path, full=True, can_prettify=True):
     pieces = path.split(os.sep)
