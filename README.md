@@ -146,3 +146,22 @@ This is my first time publishing a python project to PyPi, and I'd love to hear 
 Feel free to [open an issue](https://github.com/hartleybrody/simple_static/issues/new) if you need any help or submit a PR if you want to fix anything or add features.
 
 You can also [tweet me a link](https://twitter.com/hartbro/) if you use this to build a website! I may even add a link to your site here as well 🔗
+
+## Publishing
+Since I modify and publish this so infrequently, I'm adding instructions for myself on how to do it.
+
+Update the package version in `setup.py`
+
+Build the distribution packages:
+
+```
+python setup.py sdist bdist_wheel
+```
+
+Upload to PyPI (you'll be prompted for your PyPI credentials)
+ - Set your username to `__token__`
+ - Set your password to the token value, including the pypi- prefix, stored in .env file
+
+```
+twine upload dist/*
+```
