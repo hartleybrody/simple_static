@@ -9,6 +9,10 @@ from .utils import config, logging, ctx
 
 def build():
 
+    for plugin in config.PRE_PLUGINS:
+        logging.info(f"running pre-plugin: {plugin}")
+        exec(open(plugin).read())
+
     env = Environment(
         loader=FileSystemLoader(config.INPUT_DIR),
         autoescape=select_autoescape()
