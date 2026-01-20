@@ -78,8 +78,8 @@ def build():
             html = template.render(**ctx)
             f.write(html)
 
-    for plugin in config.PLUGINS:
-        logging.info(f"running plugin: {plugin}")
+    for plugin in config.POST_PLUGINS:
+        logging.info(f"running post-plugin: {plugin}")
         exec(open(plugin).read())
 
     t1 = datetime.now()

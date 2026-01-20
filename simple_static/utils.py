@@ -20,7 +20,7 @@ defaults = {
     "PRETTY_URL": True,
     "LOG_LEVEL": "INFO",
     "PRE_PLUGINS": [],
-    "PLUGINS": [],
+    "POST_PLUGINS": [],
 }
 
 class Config(object):
