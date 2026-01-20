@@ -8,7 +8,7 @@ from .utils import generate_output_path, trim_output_dir, generate_output_url
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
-def build_page(template_path, output_path, **user_context):
+def build_page(template_path, output_path, can_prettify=True, **user_context):
     """
     Useful for plugins that want to generate extra pages. Args:
         - template_path = file path to jinja template inside INPUT_DIR
@@ -26,7 +26,7 @@ def build_page(template_path, output_path, **user_context):
 
     template = env.get_template(template_path)
 
-    output_path = generate_output_path(output_path, can_prettify=False)
+    output_path = generate_output_path(output_path, can_prettify=can_prettify)
     os.makedirs(os.path.dirname(output_path), exist_ok=True)  # https://stackoverflow.com/a/12517490/625840
 
     with open(output_path, "w+") as f:
